@@ -6,9 +6,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const port = 3000;
-app.get('/', (req, res) => {
-    let helloMessage = 'Hello It-Incubator!!!';
-    res.send(helloMessage);
+const videos = {
+    "id": 0,
+    "title": "string",
+    "author": "string",
+    "canBeDownloaded": true,
+    "minAgeRestriction": null,
+    "createdAt": "string",
+    "publicationDate": "string",
+    "availableResolutions": [
+        "P144"
+    ]
+};
+app.get('/videos', (req, res) => {
+    res.send(videos);
 });
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
