@@ -6,7 +6,9 @@
   "scripts": {
     "watch": "tsc -w",
     "dev": "yarn nodemon --inspect dist/index.js",
-    "jest": "jest -i"
+    "jest": "jest -i",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@types/jest": "^29.5.1",
