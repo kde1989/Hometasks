@@ -1,40 +1,17 @@
 import {Request, Response, Router} from "express";
 
-type VideosType = {
-    id: number
-    title: string
-    author: string
-    canBeDownloaded: boolean
-    minAgeRestriction: null
-    createdAt: string
-    publicationDate: string
-    availableResolutions: ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
-}
-
-const db: {videos: VideosType[]} = {
-    videos: [
+let videos = [
         {
             id: 1,
             title: 'the_matrix',
             author: 'wachowski',
-            canBeDownloaded: true,
+            canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: "1999-03-31T14:09:09.441Z",
             publicationDate: "1999-04-01T14:09:09.441Z",
-            availableResolutions: ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
-        },
-        {
-            id: 2,
-            title: 'the_matrix_reloaded',
-            author: 'wachowski',
-            canBeDownloaded: true,
-            minAgeRestriction: null,
-            createdAt: "2003-05-15T14:09:09.441Z",
-            publicationDate: "2003-05-16T14:09:09.441Z",
-            availableResolutions: ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
+            availableResolutions: ['P144']
         }
     ]
-}
 const HTTPResponseStatusCodes = {
     OK_200: 200,
     Created_201: 201,
@@ -45,7 +22,7 @@ const HTTPResponseStatusCodes = {
 export const videosRouter = Router({})
 
 videosRouter.get('/', (req: Request, res: Response) => {
-    res.send(db.videos).send(HTTPResponseStatusCodes.OK_200)
+    res.send(videos).send(HTTPResponseStatusCodes.OK_200)
 })
 videosRouter.post('/', (req: Request, res: Response) => {
     let title = req.body.title
@@ -59,21 +36,21 @@ videosRouter.post('/', (req: Request, res: Response) => {
             ]})
         return;
     }
-    const newVideo: VideosType = {
-        id: 3,
+    const newVideo = {
+        id: 2,
         title: 'the_matrix_revolutions',
         author: "wachowski",
-        canBeDownloaded: true,
+        canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: "2003-11-05T14:09:09.441Z",
         publicationDate: "2003-11-06T14:09:09.441Z",
-        availableResolutions: ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
+        availableResolutions: ['P144']
     }
-    db.videos.push(newVideo)
+    videos.push(newVideo)
     res.send(newVideo).send(HTTPResponseStatusCodes.Created_201)
 })
 videosRouter.get('/:id', (req: Request, res: Response) => {
-    let video = db.videos.find(v => v.id === +req.params.id)
+    let video = videos.find(v => v.id === +req.params.id)
     if(video) {
         res.send(video).send(HTTPResponseStatusCodes.OK_200)
     } else {
@@ -92,7 +69,7 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
             ]})
         return;
     }
-    let video = db.videos.find(v => v.id === +req.params.id)
+    let video = videos.find(v => v.id === +req.params.id)
     if(video) {
         video.title = req.body.title
         res.send(HTTPResponseStatusCodes.No_Content_204)
@@ -102,9 +79,9 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
 })
 videosRouter.delete('/:id', (req: Request, res: Response) => {
     const id = +req.params.id
-    const newVideo = db.videos.filter(v => v.id !== id)
-    if(newVideo.length < db.videos.length) {
-            db.videos = newVideo
+    const newVideo = videos.filter(v => v.id !== id)
+    if(newVideo.length < videos.length) {
+            videos = newVideo
             res.send(HTTPResponseStatusCodes.No_Content_204)
         } else {
         res.send(HTTPResponseStatusCodes.Not_Found_404)
