@@ -49,7 +49,7 @@ videosRouter.get('/', (req: Request, res: Response) => {
 })
 videosRouter.post('/', (req: Request, res: Response) => {
     let title = req.body.title
-    if(!title || typeof title !== 'string' || !title.trim()) {
+    if(!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         res.send(HTTPResponseStatusCodes.Bad_Request_400).send({
             "errorsMessages": [
                 {
@@ -82,7 +82,7 @@ videosRouter.get('/:id', (req: Request, res: Response) => {
 })
 videosRouter.put('/:id', (req: Request, res: Response) => {
     let title = req.body.title
-    if(!title || typeof title !== 'string' || !title.trim()) {
+    if(!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         res.send(HTTPResponseStatusCodes.Bad_Request_400).send({
             "errorsMessages": [
                 {
@@ -101,12 +101,12 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
     }
 })
 videosRouter.delete('/:id', (req: Request, res: Response) => {
-    for (let i = 0; i < db.videos.length; i++) {
-        if(db.videos[i].id === +req.params.id) {
-            db.videos.splice(i, 1);
+    const id = +req.params.id
+    const newVideo = db.videos.filter(v => v.id !== id)
+    if(newVideo.length < db.videos.length) {
+            db.videos = newVideo
             res.send(HTTPResponseStatusCodes.No_Content_204)
-            return;
+        } else {
+        res.send(HTTPResponseStatusCodes.Not_Found_404)
         }
-    }
-    res.send(HTTPResponseStatusCodes.Not_Found_404)
 })
