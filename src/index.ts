@@ -11,6 +11,9 @@ app.use(parserMiddleware)
 app.get('/', (req: Request, res: Response) => {
     res.send('Online cinema "Platinum"')
 })
+app.delete('/testing/all-data', (req: Request, res: Response) => {
+    res.send(204)
+})
 
 app.use('/videos', videosRouter)
 

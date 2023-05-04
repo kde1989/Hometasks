@@ -48,6 +48,17 @@ videosRouter.get('/', (req: Request, res: Response) => {
     res.send(db.videos).send(HTTPResponseStatusCodes.OK_200)
 })
 videosRouter.post('/', (req: Request, res: Response) => {
+    let title = req.body.title
+    if(!title || typeof title !== 'string' || !title.trim()) {
+        res.send(HTTPResponseStatusCodes.Bad_Request_400).send({
+            "errorsMessages": [
+                {
+                    "message": "Incorrect title!",
+                    "field": "title"
+                }
+            ]})
+        return;
+    }
     const newVideo: VideosType = {
         id: 3,
         title: 'the_matrix_revolutions',
@@ -70,10 +81,21 @@ videosRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 videosRouter.put('/:id', (req: Request, res: Response) => {
+    let title = req.body.title
+    if(!title || typeof title !== 'string' || !title.trim()) {
+        res.send(HTTPResponseStatusCodes.Bad_Request_400).send({
+            "errorsMessages": [
+                {
+                    "message": "Incorrect title!",
+                    "field": "title"
+                }
+            ]})
+        return;
+    }
     let video = db.videos.find(v => v.id === +req.params.id)
     if(video) {
         video.title = req.body.title
-        res.send(video).send(HTTPResponseStatusCodes.No_Content_204)
+        res.send(HTTPResponseStatusCodes.No_Content_204)
     } else {
         res.send(HTTPResponseStatusCodes.Not_Found_404)
     }
