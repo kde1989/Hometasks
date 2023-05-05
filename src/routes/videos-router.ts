@@ -39,14 +39,16 @@ videosRouter.post('/', (req: Request, res: Response) => {
         return;
     }
     const newVideo = {
-        id: 2,
-        title: 'the_matrix_revolutions',
-        author: "wachowski",
-        canBeDownloaded: false,
-        minAgeRestriction: null,
-        createdAt: "2003-11-05T14:09:09.441Z",
-        publicationDate: "2003-11-06T14:09:09.441Z",
-        availableResolutions: ['P144']
+        "id": 1,
+        "title": "string",
+        "author": "string",
+        "canBeDownloaded": true,
+        "minAgeRestriction": null,
+        "createdAt": "2023-05-05T09:03:28.306Z",
+        "publicationDate": "2023-05-05T09:03:28.306Z",
+        "availableResolutions": [
+            "P144"
+        ]
     }
     videos.push(newVideo)
     res.send(newVideo).send(HTTPResponseStatusCodes.Created_201)
