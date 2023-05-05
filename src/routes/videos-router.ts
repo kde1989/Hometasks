@@ -1,19 +1,17 @@
 import {Request, Response, Router} from "express";
 
 let videos = [
-    {
-        "id": 0,
-        "title": "string",
-        "author": "string",
-        "canBeDownloaded": true,
-        "minAgeRestriction": null,
-        "createdAt": "2023-05-05T08:54:39.348Z",
-        "publicationDate": "2023-05-05T08:54:39.348Z",
-        "availableResolutions": [
-            "P144"
-        ]
-    }
-]
+        {
+            id: 1,
+            title: 'the_matrix',
+            author: 'wachowski',
+            canBeDownloaded: true,
+            minAgeRestriction: 16,
+            createdAt: "1999-03-31T14:09:09.441Z",
+            publicationDate: "1999-04-01T14:09:09.441Z",
+            availableResolutions: ['P144']
+        }
+    ]
 const HTTPResponseStatusCodes = {
     OK_200: 200,
     Created_201: 201,
@@ -39,16 +37,14 @@ videosRouter.post('/', (req: Request, res: Response) => {
         return;
     }
     const newVideo = {
-        "id": 1,
-        "title": "string",
-        "author": "string",
-        "canBeDownloaded": true,
-        "minAgeRestriction": null,
-        "createdAt": "2023-05-05T09:03:28.306Z",
-        "publicationDate": "2023-05-05T09:03:28.306Z",
-        "availableResolutions": [
-            "P144"
-        ]
+        id: 2,
+        title: 'the_matrix_revolutions',
+        author: "wachowski",
+        canBeDownloaded: true,
+        minAgeRestriction: 16,
+        createdAt: "2003-11-05T14:09:09.441Z",
+        publicationDate: "2003-11-06T14:09:09.441Z",
+        availableResolutions: ['P144']
     }
     videos.push(newVideo)
     res.send(newVideo).send(HTTPResponseStatusCodes.Created_201)
