@@ -15,18 +15,6 @@ let videos = [
         availableResolutions: [
             "720"
         ]
-    },
-    {
-        id: 2,
-        title: "The Matrix Reloaded",
-        author: "Laurence and Andrew Paul Wachowski",
-        canBeDownloaded: true,
-        minAgeRestriction: 16,
-        createdAt: "2003-05-15T10:22:30.993Z",
-        publicationDate: "2003-05-16T10:22:30.993Z",
-        availableResolutions: [
-            "1080"
-        ]
     }
 ]
 
