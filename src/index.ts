@@ -3,7 +3,17 @@ import express, {Request, Response} from 'express'
 const app = express()
 const port = 3000
 
-let videos = [
+type videoType = {
+    id: number,
+    title: string,
+    author: string,
+    canBeDownloaded: boolean,
+    minAgeRestriction: number | null
+    createdAt: string,
+    publicationDate: string,
+    availableResolutions: string[]
+}
+let videos: videoType[] = [
     {
         id: 1,
         title: "The Matrix",
@@ -15,8 +25,31 @@ let videos = [
         availableResolutions: [
             "720"
         ]
+    },
+    {
+        id: 2,
+        title: "The Matrix Reloaded",
+        author: "Laurence and Andrew Paul Wachowski",
+        canBeDownloaded: true,
+        minAgeRestriction: 16,
+        createdAt: "2003-05-15T10:22:30.993Z",
+        publicationDate: "2003-05-16T10:22:30.993Z",
+        availableResolutions: [
+            "1080"
+        ]
     }
 ]
+
+enum availableResolutions {
+    P144 = "P144",
+    P240 = "P240",
+    P360 = "P360",
+    P480 = "P480",
+    P720 = "P720",
+    P1080 = "P1080",
+    P1440 = "P1440",
+    P2160 = "P2160"
+}
 
 const jsonBodyMiddleware = express.json()
 app.use(jsonBodyMiddleware)
@@ -38,17 +71,17 @@ app.get('/videos/:id', (req: Request, res: Response) => {
     res.json(foundVideo)
 })
 app.post('/videos', (req: Request, res: Response) => {
-    const createdVideo = {
-        id: 3,
-        title: "The Matrix Revolutions",
-        author: "Laurence and Andrew Paul Wachowski",
+    const createdAt = new Date()
+    const publicationDate = new Date(createdAt.getTime() + 86400000)
+    let createdVideo:videoType = {
+        id: +(new Date()),
+        title: req.body.title,
+        author: req.body.author,
         canBeDownloaded: true,
-        minAgeRestriction: 16,
-        createdAt: "2003-11-05T10:22:30.993Z",
-        publicationDate: "2003-11-06T10:22:30.993Z",
-        availableResolutions: [
-            "1080"
-        ]
+        minAgeRestriction: null,
+        createdAt: createdAt.toISOString(),
+        publicationDate: publicationDate.toISOString(),
+        availableResolutions: ['availableResolutions']
     }
     videos.push(createdVideo)
     res.status(201).json(createdVideo);
