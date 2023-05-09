@@ -159,7 +159,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             res.status(204)
         }
     } else {
-        res.status(404)
+        res.sendStatus(404)
     }
 });
 app.delete('/videos/:id', (req: Request, res: Response) => {
