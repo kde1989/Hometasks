@@ -156,7 +156,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             res.status(400).send(errorsList)
         } else {
             videos[index] = newVideo;
-            res.status(204)
+            res.status(204).json(newVideo)
         }
     } else {
         res.sendStatus(404)
