@@ -145,7 +145,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             errors.push({message: 'error', field: 'canBeDownloaded'})
         } else if (typeof newVideo.minAgeRestriction === "number") {
             if (+newVideo.minAgeRestriction < 1 || +newVideo.minAgeRestriction > 18) {
-                errors.push({message: 'error', field: 'canBeDownloaded'})
+                errors.push({message: 'error', field: 'minAgeRestriction'})
             }
         }
         if (typeof newVideo.publicationDate !== "string") {
@@ -175,4 +175,4 @@ app.delete('/videos/:id', (req: Request, res: Response) => {
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
-})
+});
